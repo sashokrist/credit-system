@@ -57,4 +57,29 @@
     - След успешен вход, потребителите получават достъп до всички функционалности на системата.
 
 SCREENSHOTS:
-!
+<img width="911" alt="s1" src="https://github.com/user-attachments/assets/e1fe4861-a212-4562-a17a-847d6ce1ad08">
+
+<img width="901" alt="s2" src="https://github.com/user-attachments/assets/4612b3f3-0cc6-4b41-94d2-00edc303afed">
+
+<img width="899" alt="s3" src="https://github.com/user-attachments/assets/3fb62cef-96e9-4f5c-bf47-0680579b4556">
+
+<img width="935" alt="s4" src="https://github.com/user-attachments/assets/e9b5c858-2008-405f-b03d-e42a54bb50db">
+
+<img width="920" alt="s5" src="https://github.com/user-attachments/assets/8f6177dc-5ec9-4f84-b6ed-11f38ea70cc5">
+
+<img width="928" alt="s9" src="https://github.com/user-attachments/assets/82a54b6d-ae3f-48c5-abe9-5457a134a742">
+
+<img width="891" alt="s8" src="https://github.com/user-attachments/assets/d5fb85ea-e7c0-4b02-95d3-fa5fa7c933f4">
+
+<img width="864" alt="s7" src="https://github.com/user-attachments/assets/5529d336-c821-4c42-8786-490d017660d2">
+
+<img width="665" alt="s6" src="https://github.com/user-attachments/assets/7e9c221f-6bee-4257-9e50-246d116c67b8">
+
+<img width="920" alt="s5" src="https://github.com/user-attachments/assets/8f1728e2-8115-45af-8a88-e4e742063f35">
+
+
+
+
+
+
+
