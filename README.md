@@ -7,6 +7,21 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+Install and run the project follow these steps:
+
+run in console:
+
+git clone git@github.com:sashokrist/credit-system.git
+cd credit-system
+composer install
+cp .env.example .env
+php artisan key:generate
+Set database credentials in .env
+php artisan migrate
+npm install
+npm run dev
+php artisan serve
+
 ## Описание на Програмата за Управление на Кредити
 
 Уеб-базирано приложение, което позволява управление на кредити и плащания за кредитополучатели. Приложението включва различни функционалности и екрани, които дават възможност на потребителите лесно да създават, управляват и плащат кредити.
