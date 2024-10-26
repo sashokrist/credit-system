@@ -25,10 +25,8 @@ class CreditController extends Controller
             'term_months' => 'required|integer|min:3|max:120',
         ]);
 
-        // Изчисляване на общата стойност на всички кредити на текущия потребител
         $totalCredits = Credit::where('borrower_name', auth()->user()->name)->sum('amount');
 
-        // Проверка дали добавянето на новия кредит ще надвиши 80,000 лв
         $annualInterestRate = 7.9;
         $termYears = $request->term_months / 12;
         $totalAmountWithInterest = $request->amount * (1 + ($annualInterestRate / 100) * $termYears);
@@ -50,7 +48,6 @@ class CreditController extends Controller
             'remaining_balance' => $totalAmountWithInterest,
         ]);
 
-        // Добавяне на съобщение за успешно създаване на кредит
         return redirect()->route('credits.index')->with('success', 'Кредитът беше успешно създаден.');
     }
 }

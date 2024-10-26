@@ -13,5 +13,4 @@ class Credit extends Model
         $monthlyRate = ($interestRate / 100) / 12;
         return ($totalAmountWithInterest * $monthlyRate) / (1 - pow(1 + $monthlyRate, -$termMonths));
     }
-
 }

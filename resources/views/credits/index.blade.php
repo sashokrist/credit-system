@@ -35,8 +35,6 @@
             @endforeach
             </tbody>
         </table>
-
-        <!-- Пагинация -->
         <div class="d-flex justify-content-center">
             {{ $credits->links('pagination::bootstrap-4') }}
         </div>
