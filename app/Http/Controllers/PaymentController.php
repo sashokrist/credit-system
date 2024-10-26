@@ -23,13 +23,29 @@ class PaymentController extends Controller
         ]);
 
         $credit = Credit::find($request->credit_id);
-        Payment::applyPayment($credit, $request->amount);
+
+        // Проверка дали сумата на плащането е по-малка от месечната вноска
+        if ($request->amount < $credit->monthly_payment) {
+            return redirect()->back()->withErrors(['amount' => 'Сумата на плащането не може да бъде по-малка от месечната вноска от ' . number_format($credit->monthly_payment, 2) . ' лв.']);
+        }
+
+        // Проверка дали сумата на плащането е по-голяма от остатъчната сума
+        $amountToPay = $request->amount;
+        if ($request->amount > $credit->remaining_balance) {
+            $amountToPay = $credit->remaining_balance;
+            $message = 'Сумата на плащането е по-голяма от остатъчната сума. Платени са само ' . number_format($amountToPay, 2) . ' лв за кредит с код ' . $credit->credit_id . '.';
+        } else {
+            $message = 'Плащането от ' . number_format($amountToPay, 2) . ' лв беше успешно извършено за кредит с код ' . $credit->credit_id . '.';
+        }
+
+        // Изпълнение на плащането
+        Payment::applyPayment($credit, $amountToPay);
 
         Payment::create([
             'credit_id' => $request->credit_id,
-            'amount' => $request->amount,
+            'amount' => $amountToPay,
         ]);
 
-        return redirect()->route('credits.index')->with('success', 'Плащането е успешно.');
+        return redirect()->route('credits.index')->with('success', $message);
     }
 }

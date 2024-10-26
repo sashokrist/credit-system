@@ -4,6 +4,17 @@
     <div class="container mt-5">
         <h1 class="mb-4">Ново плащане</h1>
 
+        <!-- Показване на съобщения за грешки -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('payments.store') }}" method="POST">
             @csrf
 
@@ -11,7 +22,9 @@
                 <label for="credit_id">Кредит:</label>
                 <select class="form-control" name="credit_id" id="credit_id" required>
                     @foreach($credits as $credit)
-                        <option value="{{ $credit->id }}">{{ $credit->credit_id }} - {{ $credit->borrower_name }}</option>
+                        <option value="{{ $credit->id }}">
+                            {{ $credit->borrower_name }} - Остатъчна сума: {{ number_format($credit->remaining_balance, 2) }} лв - Месечна вноска: {{ number_format($credit->monthly_payment, 2) }} лв
+                        </option>
                     @endforeach
                 </select>
             </div>

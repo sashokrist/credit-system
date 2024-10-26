@@ -3,6 +3,15 @@
 @section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Създаване на нов кредит</h1>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <form action="{{ route('credits.store') }}" method="POST">
             @csrf

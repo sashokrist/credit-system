@@ -9,7 +9,7 @@ class CreditController extends Controller
 {
     public function index()
     {
-        $credits = Credit::all();
+        $credits = Credit::orderBy('created_at', 'desc')->paginate(5);
         return view('credits.index', compact('credits'));
     }
 
@@ -25,18 +25,22 @@ class CreditController extends Controller
             'term_months' => 'required|integer|min:3|max:120',
         ]);
 
-        // Изчисляване на общата сума с лихва
-        $annualInterestRate = 7.9; // Годишен лихвен процент
-        $termYears = $request->term_months / 12; // Преобразуване на месеци в години
+        // Изчисляване на общата стойност на всички кредити на текущия потребител
+        $totalCredits = Credit::where('borrower_name', auth()->user()->name)->sum('amount');
+
+        // Проверка дали добавянето на новия кредит ще надвиши 80,000 лв
+        $annualInterestRate = 7.9;
+        $termYears = $request->term_months / 12;
         $totalAmountWithInterest = $request->amount * (1 + ($annualInterestRate / 100) * $termYears);
 
-        // Генериране на уникален идентификатор за кредита
+        if ($totalCredits + $totalAmountWithInterest > 80000) {
+            return redirect()->back()->withErrors(['amount' => 'Общата стойност на кредитите не може да надвишава 80,000 лв.']);
+        }
+
         $creditId = str_pad(Credit::max('id') + 1, 7, '0', STR_PAD_LEFT);
 
-        // Изчисляване на месечната вноска въз основа на общата сума с лихва
         $monthlyPayment = Credit::calculateMonthlyPayment($totalAmountWithInterest, $request->term_months);
 
-        // Създаване на кредита
         Credit::create([
             'credit_id' => $creditId,
             'borrower_name' => auth()->user()->name,
@@ -46,6 +50,7 @@ class CreditController extends Controller
             'remaining_balance' => $totalAmountWithInterest,
         ]);
 
-        return redirect()->route('credits.index');
+        // Добавяне на съобщение за успешно създаване на кредит
+        return redirect()->route('credits.index')->with('success', 'Кредитът беше успешно създаден.');
     }
 }
